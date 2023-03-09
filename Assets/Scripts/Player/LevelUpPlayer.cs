@@ -1,12 +1,67 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
 using System.Linq;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+[Serializable]
+public class Upgrade
+{
+    [SerializeField]
+    private string name;
+    public string Name => name;
+    [SerializeField]
+    private string description;
+    public string Description => description;
+
+    [SerializeField]
+    private int level = 0;
+    [SerializeField]
+    private int maxLevel = 1;
+
+    public bool CanBeUpgraded()
+    {
+        return level < maxLevel;
+    }
+
+    public void LevelUp()
+    {
+        if (level < maxLevel)
+        {
+            level++;
+        }
+    }
+    public Upgrade(string name, string description)
+    {
+        this.name = name;
+        this.description = description;
+        this.maxLevel = 1;
+    }
+
+    public Upgrade(string name, string description, int maxLevel)
+    {
+        this.name = name;
+        this.description = description;
+        this.maxLevel = maxLevel;
+    }
+}
 
 public class LevelUpPlayer : MonoBehaviour
 {
+    [SerializeField]
+    private List<Upgrade> upgradeList = new List<Upgrade>
+    {
+        new Upgrade("Upgrade Fire Rate", "Increases the rate of fire for your weapon by 10%.", 1),
+        new Upgrade("Upgrade Damage", "Increases the amount of damage dealt by your weapon by 5.", 1),
+        new Upgrade("Upgrade Health", "Increases the maximum health of your player by 10.", 1),
+        new Upgrade("Upgrade Speed", "Increase speed by 10%", 1),
+        new Upgrade("Plasma Gun", "Unlock a high damage but slow firing Plasma Gun" ),
+        new Upgrade("Shield", "Provides a shield that blocks an instance of damage, recharges after 10 seconds"),
+        new Upgrade("Rocket Launcher", "Gives a Rocket Launcher that deals high damage and homes in on enemies")
+    };
+
+
     private int Exp;
     public TextMeshProUGUI ExpText;
     public int Level;
@@ -16,19 +71,12 @@ public class LevelUpPlayer : MonoBehaviour
     public TextMeshProUGUI LevelUpText;
     public GameObject overlay;
     public GameObject LevelUpUI;
-    public GameObject ChooseUpgrade1Button;
-    public GameObject ChooseUpgrade2Button;
-    public GameObject ChooseUpgrade3Button;
-    public TextMeshProUGUI Upgrade1Description;
-    public TextMeshProUGUI Upgrade2Description;
-    public TextMeshProUGUI Upgrade3Description;
+
+    [SerializeField]
+    private List<ChooseUpgradeButton> chooseUpgradeButtons = new List<ChooseUpgradeButton>();
+
     public int health;
     public TextMeshProUGUI HealthText;
-
-    public bool hasPlasmaGun;
-    public bool hasShield;
-    public bool hasRocketLauncher;
-
 
 
     // Start is called before the first frame update
@@ -40,19 +88,11 @@ public class LevelUpPlayer : MonoBehaviour
         ExptoLevelup = 5;
         ExpText.text = "Exp: " + Exp + "/" + ExptoLevelup;
 
-
         CurrentLevelText.text = "Level: " + Level;
 
-        LevelUpText.enabled = false;
-        overlay.SetActive(false);
-        UpgradeButtonDisabled();
+        SetUpgradeMenuActive(false);
 
         UpdateExpBar();
-
-
-        hasPlasmaGun = false;
-        hasShield = false;
-        hasRocketLauncher = false;
 
     }
 
@@ -66,11 +106,6 @@ public class LevelUpPlayer : MonoBehaviour
 
         }
 
-        if (LevelUpText.enabled == true)
-        {
-            Time.timeScale = 0;
-
-        }
 
     }
 
@@ -87,84 +122,20 @@ public class LevelUpPlayer : MonoBehaviour
         ExpText.text = "Exp: " + Exp + "/" + ExptoLevelup;
         UpdateExpBar();
 
+        SetUpgradeMenuActive(true);
 
-        LevelUpText.enabled = true;
-        overlay.SetActive(true);
-        UpgradeButtonEnabled();
+        List<Upgrade> possibleUpgrades = upgradeList.Where(upgrade => upgrade.CanBeUpgraded()).ToList();
 
-        string[] upgrades = { "Upgrade Fire Rate", "Upgrade Damage", "Upgrade Health", "Upgrade Speed", "Plasma Gun", "Shield", "Rocket Launcher"};
-
-
-        // Explanation of the below:
-        // Used System.Linq which gives more options for arrays, lists, databases, XML docs etc
-        // If you have one of the upgrade below, the upgrades (x), where x does not equal Plasma Gun...
-        // ...are added to an array which stops you having the same upgrade twice
-        if (hasPlasmaGun == true)
-{
-            upgrades = upgrades.Where(x => x != "Plasma Gun").ToArray();
-        }
-
-        if (hasShield == true)
+        int numberOfChoices = possibleUpgrades.Count < 3 ? possibleUpgrades.Count : 3;
+        for (int i = 0; i < numberOfChoices; i++)
         {
-            upgrades = upgrades.Where(x => x != "Shield").ToArray();
-        }
-
-if (hasRocketLauncher == true)
-        {
-            upgrades = upgrades.Where(x => x != "Rocket Launcher").ToArray();
-        }
+            int rand = (int)UnityEngine.Random.Range(0, possibleUpgrades.Count);
+            chooseUpgradeButtons[i].gameObject.SetActive(true);
+            chooseUpgradeButtons[i].SetUpgrade(possibleUpgrades[rand]);
+            possibleUpgrades.RemoveAt(rand);
 
 
-        Shuffle(upgrades);
-        var upgradeFunctions = new Dictionary<string, string>() {
-            { "Upgrade Fire Rate", nameof(UpgradeFireRate) },
-            { "Upgrade Damage", nameof(UpgradeDamage) },
-            { "Upgrade Health", nameof(UpgradeHealth) },
-            { "Upgrade Speed", nameof(UpgradeSpeed) },
-            { "Plasma Gun", nameof(PlasmaGun) },
-            { "Shield", nameof(Shield) },
-            { "Rocket Launcher", nameof(RocketLauncher) }
-        };
-
-   
-
-        if (ChooseUpgrade1Button.GetComponentInChildren<TextMeshProUGUI>() != null)
-        {
-            ChooseUpgrade1Button.GetComponentInChildren<TextMeshProUGUI>().text = upgrades[0];
         }
-        if (ChooseUpgrade2Button.GetComponentInChildren<TextMeshProUGUI>() != null)
-        {
-            ChooseUpgrade2Button.GetComponentInChildren<TextMeshProUGUI>().text = upgrades[1];
-        }
-        if (ChooseUpgrade3Button.GetComponentInChildren<TextMeshProUGUI>() != null)
-        {
-            ChooseUpgrade3Button.GetComponentInChildren<TextMeshProUGUI>().text = upgrades[2];
-        }
-
-        var upgradeDescriptions = new Dictionary<string, string>()
-        {
-             { "Upgrade Fire Rate", "Increases the rate of fire for your weapon by 10%." },
-             { "Upgrade Damage", "Increases the amount of damage dealt by your weapon by 5." },
-             { "Upgrade Health", "Increases the maximum health of your player by 10." },
-            { "Upgrade Speed", "Increase speed by 10%" },
-            { "Plasma Gun", "Unlock a high damage but slow firing Plasma Gun" },
-            {"Shield", "Provides a shield that blocks an instance of damage, recharges after 10 seconds" },
-            {"Rocket Launcher", "Gives a Rocket Launcher that deals high damage and homes in on enemies" }
-        };
-
-        if (Upgrade1Description != null)
-        {
-            Upgrade1Description.text = upgradeDescriptions[upgrades[0]];
-        }
-        if (Upgrade2Description != null)
-        {
-            Upgrade2Description.text = upgradeDescriptions[upgrades[1]];
-        }
-        if (Upgrade3Description != null)
-        {
-            Upgrade3Description.text = upgradeDescriptions[upgrades[2]];
-        }
-
 
     }
 
@@ -187,8 +158,9 @@ if (hasRocketLauncher == true)
     public void ChooseUpgrade(GameObject button)
     {
 
-        var buttonText = button.GetComponentInChildren<TextMeshProUGUI>().text;
-        switch (buttonText)
+        var upgradeSelected = button.GetComponentInChildren<ChooseUpgradeButton>().Upgrade;
+        upgradeSelected.LevelUp();
+        switch (upgradeSelected.Name)
         {
             case "Upgrade Fire Rate":
                 UpgradeFireRate();
@@ -213,31 +185,23 @@ if (hasRocketLauncher == true)
                 break;
         }
 
-        LevelUpText.enabled = false;
-        overlay.SetActive(false);
-        UpgradeButtonDisabled();
-        Time.timeScale = 1;
+        SetUpgradeMenuActive(false);
     }
 
-    void Shuffle(string[] arr)
+    public void SetUpgradeMenuActive(bool value)
     {
-        for (int i = arr.Length - 1; i > 0; i--)
+        LevelUpText.enabled = value;
+        overlay.SetActive(value);
+        LevelUpUI.SetActive(value);
+        Time.timeScale = value ? 0 : 1;
+
+        if (!value)
         {
-            int r = Random.Range(0, i);
-            string temp = arr[i];
-            arr[i] = arr[r];
-            arr[r] = temp;
+            foreach (ChooseUpgradeButton button in chooseUpgradeButtons)
+            {
+                button.gameObject.SetActive(false);
+            }
         }
-    }
-
-    public void UpgradeButtonDisabled()
-    {
-        LevelUpUI.SetActive(false);
-    }
-
-    public void UpgradeButtonEnabled()
-    {
-        LevelUpUI.SetActive(true);
     }
 
     public void UpgradeFireRate()
@@ -270,59 +234,22 @@ if (hasRocketLauncher == true)
     }
 
     public void PlasmaGun()
-    { 
+    {
         PlayerShoots playerShoots = GetComponent<PlayerShoots>();
         playerShoots.plasmaGun.SetActive(true);
-        hasPlasmaGun = true;
-        
+
     }
 
     public void Shield()
     {
-        
-        hasShield = true;
+        PlayerShoots playerShoots = GetComponent<PlayerShoots>();
+        playerShoots.EquiptShield();
     }
 
     public void RocketLauncher()
     {
         PlayerShoots playerShoots = GetComponent<PlayerShoots>();
         playerShoots.rocketLauncher.SetActive(true);
-        hasRocketLauncher = true;
-    }
-}
-
-
-    public class Bullet : MonoBehaviour
-    {
-        [SerializeField]
-        private float speed = 2;
-
-        [SerializeField]
-        private int damage = 2;
-
-        public void SetDamage(int damage)
-        {
-            this.damage = damage;
-        }
-
-        private void Update()
-        {
-            // Make the bullet move
-        }
-    }
-
-public class Weapon : MonoBehaviour
-{
-    [SerializeField]
-    private GameObject bulletPrefab = null;
-
-    [SerializeField]
-    private int bulletDamage = 5;
-
-    public void Shoot()
-    {
-        Bullet bullet = Instantiate(bulletPrefab, this.transform).GetComponent<Bullet>();
-        bullet.SetDamage(bulletDamage);
     }
 }
 

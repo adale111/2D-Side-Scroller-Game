@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerShoots : MonoBehaviour
@@ -31,7 +30,7 @@ public class PlayerShoots : MonoBehaviour
     public Transform rocketLauncherSpawn;
     public int rocketLauncherDamage;
 
-    
+
 
 
     void Start()
@@ -44,8 +43,8 @@ public class PlayerShoots : MonoBehaviour
         plasmaGun.SetActive(false);
 
         shield.SetActive(false);
-        
-         shieldRechargeTime = 10f;
+
+        shieldRechargeTime = 10f;
         shieldCharged = false;
         shieldEquipt = false;
         shieldHit = false;
@@ -83,50 +82,44 @@ public class PlayerShoots : MonoBehaviour
         }
 
 
-        
+
         LevelUpPlayer levelUpPlayer = GetComponent<LevelUpPlayer>();
 
-        if (levelUpPlayer.hasShield == true && shieldEquipt == false)
-        {
-            EquiptShield();
 
-        }
-          
-        
         if (shieldEquipt == true && shieldCharged == true)
         {
 
-                shield.SetActive(true);
+            shield.SetActive(true);
         }
-           
+
         else if (shieldEquipt == true && shieldCharged == false & shieldHit == true)
-            {
-                shield.SetActive(false);
-                StartCoroutine(RechargeShield());
-                shieldHit = false;
-            }
-        
+        {
+            shield.SetActive(false);
+            StartCoroutine(RechargeShield());
+            shieldHit = false;
+        }
+
 
         if (shieldEquipt == true && shieldCharged == true)
         {
             shield.SetActive(true);
         }
-        
+
 
     }
 
     void Fire()
     {
-        
+
         Vector3 bulletSpawnPosition = bulletSpawn.position;
         bulletSpawnPosition.x += 0.5f; // shift the bullet spawn position slightly to the right
 
-      
+
 
         //Spawns bullet with position adjusted as above
         var bullet = (GameObject)Instantiate(bulletPrefab, bulletSpawnPosition, bulletSpawn.rotation);
 
-      
+
         // shoots bullet to the right
         bullet.GetComponent<Rigidbody2D>().velocity = bullet.transform.right * 6;
 
@@ -140,7 +133,7 @@ public class PlayerShoots : MonoBehaviour
     {
         Vector3 plasmaGunBulletSpawnPosition = plasmaGunSpawn.position;
         plasmaGunBulletSpawnPosition.x += 0.5f;
-        
+
 
         var plasmaGunBullet = (GameObject)Instantiate(plasmaGunBulletPrefab, plasmaGunBulletSpawnPosition, plasmaGunSpawn.rotation);
 
@@ -148,13 +141,13 @@ public class PlayerShoots : MonoBehaviour
 
         Destroy(plasmaGunBullet, 12.0f);
     }
-    
-    void EquiptShield()
+
+    public void EquiptShield()
     {
         shield.SetActive(true);
         shieldEquipt = true;
         shieldCharged = true;
-            
+
     }
 
     IEnumerator RechargeShield()

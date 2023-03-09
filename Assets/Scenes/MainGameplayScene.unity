@@ -1242,6 +1242,7 @@ GameObject:
   - component: {fileID: 635355319}
   - component: {fileID: 635355318}
   - component: {fileID: 635355317}
+  - component: {fileID: 635355321}
   m_Layer: 5
   m_Name: 'Choose Upgrade 2 Button '
   m_TagString: Untagged
@@ -1365,6 +1366,20 @@ RectTransform:
   m_AnchoredPosition: {x: -20.36325, y: -113.79939}
   m_SizeDelta: {x: 211.0479, y: 53.7432}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &635355321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635355316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e391924c42ea014cb49968b15632036, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  titleText: {fileID: 1721085378}
+  descriptionText: {fileID: 1171068231}
 --- !u!1 &734685179
 GameObject:
   m_ObjectHideFlags: 0
@@ -7093,6 +7108,7 @@ GameObject:
   - component: {fileID: 1319401913}
   - component: {fileID: 1319401912}
   - component: {fileID: 1319401911}
+  - component: {fileID: 1319401915}
   m_Layer: 5
   m_Name: Choose Upgrade 1 Button
   m_TagString: Untagged
@@ -7216,6 +7232,20 @@ RectTransform:
   m_AnchoredPosition: {x: -262.83932, y: -113.79939}
   m_SizeDelta: {x: 211.0479, y: 53.7432}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1319401915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1319401910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e391924c42ea014cb49968b15632036, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  titleText: {fileID: 1275594148}
+  descriptionText: {fileID: 397714445}
 --- !u!1 &1373965592
 GameObject:
   m_ObjectHideFlags: 0
@@ -8040,6 +8070,7 @@ GameObject:
   - component: {fileID: 1823757633}
   - component: {fileID: 1823757632}
   - component: {fileID: 1823757631}
+  - component: {fileID: 1823757634}
   m_Layer: 5
   m_Name: Choose Upgrade 3 Button
   m_TagString: Untagged
@@ -8163,6 +8194,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1823757629}
   m_CullTransparentMesh: 1
+--- !u!114 &1823757634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823757629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e391924c42ea014cb49968b15632036, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  titleText: {fileID: 406123537}
+  descriptionText: {fileID: 472885298}
 --- !u!1 &2002112206
 GameObject:
   m_ObjectHideFlags: 0
@@ -8826,6 +8871,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1373965594}
     - target: {fileID: 7088339804035813622, guid: ebccab8b3b022f54f930d6bece3d5681, type: 3}
+      propertyPath: ExptoLevelup
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7088339804035813622, guid: ebccab8b3b022f54f930d6bece3d5681, type: 3}
       propertyPath: CurrentLevelText
       value: 
       objectReference: {fileID: 327892905}
@@ -8853,6 +8902,42 @@ PrefabInstance:
       propertyPath: ChooseUpgrade3Button
       value: 
       objectReference: {fileID: 406123535}
+    - target: {fileID: 7088339804035813622, guid: ebccab8b3b022f54f930d6bece3d5681, type: 3}
+      propertyPath: upgradeList.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7088339804035813622, guid: ebccab8b3b022f54f930d6bece3d5681, type: 3}
+      propertyPath: chooseUpgradeButtons.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7088339804035813622, guid: ebccab8b3b022f54f930d6bece3d5681, type: 3}
+      propertyPath: upgradeList.Array.data[0].level
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7088339804035813622, guid: ebccab8b3b022f54f930d6bece3d5681, type: 3}
+      propertyPath: upgradeList.Array.data[1].level
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7088339804035813622, guid: ebccab8b3b022f54f930d6bece3d5681, type: 3}
+      propertyPath: upgradeList.Array.data[2].level
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7088339804035813622, guid: ebccab8b3b022f54f930d6bece3d5681, type: 3}
+      propertyPath: upgradeList.Array.data[3].level
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7088339804035813622, guid: ebccab8b3b022f54f930d6bece3d5681, type: 3}
+      propertyPath: chooseUpgradeButtons.Array.data[0]
+      value: 
+      objectReference: {fileID: 1319401915}
+    - target: {fileID: 7088339804035813622, guid: ebccab8b3b022f54f930d6bece3d5681, type: 3}
+      propertyPath: chooseUpgradeButtons.Array.data[1]
+      value: 
+      objectReference: {fileID: 635355321}
+    - target: {fileID: 7088339804035813622, guid: ebccab8b3b022f54f930d6bece3d5681, type: 3}
+      propertyPath: chooseUpgradeButtons.Array.data[2]
+      value: 
+      objectReference: {fileID: 1823757634}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ebccab8b3b022f54f930d6bece3d5681, type: 3}
 --- !u!1001 &8910428890331182831
