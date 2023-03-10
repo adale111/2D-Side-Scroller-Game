@@ -97,7 +97,7 @@ public class LevelUpPlayer : MonoBehaviour
 
         // Explanation of the below:
         // Used System.Linq which gives more options for arrays, lists, databases, XML docs etc
-        // If you have one of the upgrade below, the upgrades (x), where x does not equal Plasma Gun...
+        // If you have one of the upgrades below, the upgrades (x), where x does not equal Plasma Gun...
         // ...are added to an array which stops you having the same upgrade twice
         if (hasPlasmaGun == true)
 {
