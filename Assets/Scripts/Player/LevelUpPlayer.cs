@@ -11,6 +11,18 @@ public class Upgrade
     [SerializeField]
     private string name;
     public string Name => name;
+
+    
+    string SetNewNameAndReturnOldName(string newName)
+    {
+        string oldName = this.name;
+        this.name = newName;
+        return oldName;
+
+    }
+
+
+
     [SerializeField]
     private string description;
     public string Description => description;
