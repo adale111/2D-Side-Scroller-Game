@@ -12,8 +12,14 @@ public class Upgrade
     private string name;
     public string Name => name;
 
+    public void SetName(string newName)
+    {
+        this.name = newName;
+    }
+
+
     
-    string SetNewNameAndReturnOldName(string newName)
+    public string SetNewNameAndReturnOldName(string newName)
     {
         string oldName = this.name;
         this.name = newName;
@@ -94,6 +100,31 @@ public class LevelUpPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+        Upgrade upgrade1 = new Upgrade("Upgrade1", "This is the upgrade 1 description");
+        Upgrade upgrade2 = new Upgrade("Upgrade2", "This is the upgrade 2 description");
+
+        Debug.Log($"Upgrade 1's name is {upgrade1.Name}");
+        Debug.Log($"Upgrade 2's name is {upgrade2.Name}");
+        
+        string upgrade1OldName;
+
+        upgrade1OldName = upgrade1.SetNewNameAndReturnOldName("NewUpgrade1");
+
+        Debug.Log($"Upgrade 1's name is {upgrade1.Name}");
+        Debug.Log($"Upgrade 2's name is {upgrade2.Name}");
+
+        Debug.Log($"Upgrade 1's old name was {upgrade1OldName}");
+
+        // string oldName = newUpgrade.SetNewNameAndReturnOldName();
+
+
+
+
+
+
+
+
 
         Level = 1;
 
@@ -211,7 +242,7 @@ public class LevelUpPlayer : MonoBehaviour
         {
             foreach (ChooseUpgradeButton button in chooseUpgradeButtons)
             {
-                button.gameObject.SetActive(false);
+               button.gameObject.SetActive(false);
             }
         }
     }
