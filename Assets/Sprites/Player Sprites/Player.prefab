@@ -21,7 +21,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7088339804035813621
 RectTransform:
   m_ObjectHideFlags: 0
@@ -188,6 +188,7 @@ MonoBehaviour:
   HealthText: {fileID: 0}
   hasPlasmaGun: 0
   hasShield: 0
+  hasRocketLauncher: 0
 --- !u!114 &7088339804035813615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,6 +213,11 @@ MonoBehaviour:
   shield: {fileID: 7088339804529683325}
   shieldCharged: 0
   shieldHit: 0
+  rocketLauncher: {fileID: 0}
+  rocketLauncherRocketPrefab: {fileID: 0}
+  rocketLauncherFirerate: 0
+  rocketLauncherSpawn: {fileID: 0}
+  rocketLauncherDamage: 0
 --- !u!1 &7088339804529683325
 GameObject:
   m_ObjectHideFlags: 0

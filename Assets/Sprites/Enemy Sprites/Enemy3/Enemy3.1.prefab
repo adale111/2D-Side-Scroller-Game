@@ -168,7 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0
   health: 10
-  expOrb: {fileID: 7623505633965521381, guid: f8bf86e436a42f748aaa2c6aec765691, type: 3}
+  expOrb: {fileID: 8222676654939586449, guid: 0a462513913f8af48b05d5386db6538e, type: 3}
 --- !u!114 &229162813688734379
 MonoBehaviour:
   m_ObjectHideFlags: 0
