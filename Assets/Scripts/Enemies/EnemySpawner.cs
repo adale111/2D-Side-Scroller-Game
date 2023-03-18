@@ -17,6 +17,7 @@ public class EnemySpawner : MonoBehaviour
     private int enemiesPerWave;
     public TextMeshProUGUI enemiesLeftInWaveText;
     public TextMeshProUGUI waveNumberText;
+    public TextMeshProUGUI waveCompleteText;
     public bool enemy3Spawning = false;
     
 
@@ -58,6 +59,9 @@ public class EnemySpawner : MonoBehaviour
         allEnemiesSpawned = false;
         waveUpdated = false;
 
+        waveCompleteText.enabled = false;
+        
+
     }
 
     // Update is called once per frame
@@ -67,6 +71,7 @@ public class EnemySpawner : MonoBehaviour
         // Update Wave and Enemies UI
         enemiesLeftInWaveText.text = "Enemies Left: " + enemiesLeftInWave;
         waveNumberText.text = "Wave: " + waveNumber;
+        waveCompleteText.text = "Wave " + waveNumber + " Complete";
 
        
         if (allEnemiesSpawned == true && GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
@@ -274,7 +279,9 @@ public class EnemySpawner : MonoBehaviour
     private IEnumerator WaveDelay()
     {
         isWaveOver = true;
+        waveCompleteText.enabled = true;
         yield return new WaitForSeconds(5);
+        waveCompleteText.enabled = false;
         isWaveOver = false;
         waveNumber++;
         enemiesPerWave += 5;
